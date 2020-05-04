@@ -36,6 +36,14 @@ $ npm install
 
 ## Running the app
 
+Before running the app for the first time, you will need to create a `.env` file with the following properties:
+```
+PORT=1500
+DB_HOST="mongodb://localhost"
+DB_PORT="27017"
+DB_NAME="customer"
+```
+
 ```bash
 # development
 $ npm run start
