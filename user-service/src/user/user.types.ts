@@ -20,9 +20,12 @@ export class UserInput {
 export class UserUpdates {
   name: string;
   surname: string;
-  permissions: Permissions;
   companyId: string; // The company that this user belongs to
   updatedAt: Date;
+}
+
+export class UserPermissionUpdates {
+  permissions: Permissions;
 }
 
 export enum Permissions {

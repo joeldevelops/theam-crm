@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
-import { User, UserInput, UserUpdates } from './user.types';
+import { User, UserInput, UserUpdates, UserPermissionUpdates } from './user.types';
 import * as dbUtil from '../database/db.util';
 
 @Injectable()
@@ -62,6 +62,23 @@ export class UserService {
     return dbUtil.checkResponse(
       result,
       `Delete on user with ID: ${id} was unsuccessful`
+    );
+  }
+
+  public async updateUserPermissions(
+    id: string,
+    body: UserPermissionUpdates
+  ): Promise<boolean> {
+    const result = await this.userModel.updateOne(
+      dbUtil.query({ _id: new Types.ObjectId(id) }),
+      {
+        permissions: body.permissions
+      }
+    );
+
+    return dbUtil.checkResponse(
+      result,
+      `Update on user permissions with ID: ${id} was unsuccessful`
     );
   }
 }

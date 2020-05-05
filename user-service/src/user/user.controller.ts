@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Param, Query, Body } from '@nestjs/common';
 
 import { UserService } from './user.service';
-import { User, UserInput, UserUpdates } from './user.types';
+import { User, UserInput, UserUpdates, UserPermissionUpdates } from './user.types';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('v1/user')
@@ -48,5 +48,14 @@ export class UserController {
   @Delete(':id')
   public deleteUser(@Param('id') id: string): Promise<boolean> {
     return this.userService.deleteUser(id);
+  }
+
+  @ApiTags('permission')
+  @Put(':id/permissions')
+  public updateUserPermissions(
+    @Param('id') id: string,
+    @Body() body: UserPermissionUpdates
+  ): Promise<boolean> {
+    return this.userService.updateUserPermissions(id, body);
   }
 }
