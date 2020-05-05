@@ -42,6 +42,9 @@ PORT=2020
 DB_HOST="mongodb://localhost"
 DB_PORT="27017"
 DB_NAME="user"
+
+DOCS_ENABLED=true
+DOCS_ENDPOINT="swagger"
 ```
 
 ```bash

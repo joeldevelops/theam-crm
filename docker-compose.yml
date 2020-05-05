@@ -1,0 +1,25 @@
+version: "2"
+services:
+  customer:
+    env_file:
+      - ./customer-service/.env
+    build: ./customer-service/.
+    ports:
+      - "1500:1500"
+    depends_on:
+      - mongo
+  user:
+    env_file:
+      - ./user-service/.env
+    build: ./user-service/.
+    ports:
+      - "2020:2020"
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - c:/data/db:/data/db
+      - c:/data/configdb:/data/configdb

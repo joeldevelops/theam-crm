@@ -2,6 +2,62 @@
 
 This app is the backend for a CRM service that allows users to view customers
 
+## Getting Started With Docker
+
+These apps are build to work with `docker` and `docker-compose` so that the whole ecosystem can be run locally.
+
+If you would like to run things locally without docker (not recommended), see the next section on getting started locally.
+
+### Prerequisites
+
+If you haven't already, download and install [Docker](https://www.docker.com/products/docker-desktop) and [Docker Compose](https://docs.docker.com/compose/install/).
+
+Once you have docker installed, you will need to create a `.env` file for each service you would like to run. The recommended settings are stored in the README of each respective service.
+
+### Running
+
+To get all the services running at once, the following command will set up and run everything:
+
+```
+docker-compose up
+```
+
+Please note that the first time running this command will take slightly longer.
+
+Now that the apps and supporting services are up and running, you can go to the specified ports on localhost to see the swagger docs for each service.
+
+
+## Getting Started Without Docker
+
+Docker is recommended for this system, however if it is not available then following the instructions below will get you up and running.
+
+### Prerequisites
+
+You will need to download and install each of the following in order to run the apps:
+
+* [Node.js](https://nodejs.org/en/download/)
+* [MongoDB](https://www.mongodb.com/download-center/community)
+
+Once you have each installed, you will need to create a `.env` file for each service you would like to run. The recommended settings are stored in the README of each respective service.
+
+### Running
+
+For running the applications, we will need several terminals to run the different processes. In the first terminal, run MongoDB. The default settings are sufficient for a local run:
+
+```
+mongod
+```
+
+next, for each service you will need to install the node modules before running it:
+
+```
+npm install && npm start
+```
+
+Repeat in a new terminal for the user, customer, and photo services.
+
+And that's it! You should be able to see all of the swagger documents if you go to a service's port in your browser.
+
 ## High Level Design and APIs
 
 This project was designed with the following considerations and assumptions:
@@ -37,26 +93,6 @@ uploadPhoto(imageData, customerId=null)
 **Option 2**: The frontend application will call into the `uploadPhoto` API with the image data and a `customerId`. Upon seeing the `customerId` the Photo Service will upload the image to the image store and add a message to RMQ to update the customer. The Customer Service will grab the message and add the photo path to the given customer document
 
 There will only be photo uploads for customer documents at this time. However, should this requirement change we will only need to add a optional `photo` property to user documents.
-
-## Getting Started
-
-TBD
-
-### Prerequisites
-
-TBD
-
-```
-TBD
-```
-
-### Installing
-
-TBD
-
-```
-TBD
-```
 
 ## Running the tests
 
