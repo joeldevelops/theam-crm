@@ -7,5 +7,15 @@ export const userSchema = new Schema({
     companyId: String,
     createdAt: { type: Date, default: new Date() },
     updatedAt: { type: Date, default: new Date() },
-    deleted: { type: Boolean, default: false }
+    active: { type: Boolean, default: true }
+});
+
+// Transform the data when returning it to the client
+userSchema.set('toJSON', {
+  transform: (doc, ret, options) => {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+    delete ret.active;
+  }
 });

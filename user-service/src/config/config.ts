@@ -6,7 +6,8 @@ const config = {
     name: process.env.DB_NAME,
     connectionString: ''
   },
-  
+  docsEnabled: process.env.DOCS_ENABLED || true,
+  docsEndpoint: process.env.DOCS_ENDPOINT
 };
 
 config.db.connectionString = `${config.db.host}:${config.db.port}/${config.db.name}`;

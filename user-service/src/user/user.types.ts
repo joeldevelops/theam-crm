@@ -8,7 +8,7 @@ export class User extends Document {
   companyId: string; // The company that this user belongs to
   createdAt: Date;
   updatedAt: Date;
-  deleted?: boolean;
+  active?: boolean;
 }
 
 export class UserInput {

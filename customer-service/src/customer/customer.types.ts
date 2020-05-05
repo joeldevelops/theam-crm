@@ -9,12 +9,13 @@ export class Customer extends Document {
   companyId: string; // The company that this customer is in the CRM of
   createdAt: Date;
   updatedAt: Date;
-  deleted?: boolean;
+  active?: boolean;
 }
 
 export class CustomerInput {
   name: string;
   surname: string;
+  companyId: string;
 }
 
 export class CustomerUpdates {

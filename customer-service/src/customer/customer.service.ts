@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 import { Customer, CustomerInput, CustomerUpdates } from './customer.types';
 import * as dbUtil from '../database/db.util';
@@ -9,15 +9,19 @@ import * as dbUtil from '../database/db.util';
 export class CustomerService {
   constructor(@InjectModel('Customer') private customerModel: Model<Customer>) {}
 
-  public async getCustomers(customerId: string): Promise<Customer[]> {
-    return this.customerModel.find(dbUtil.query({customerId})).exec();
+  public async getCustomers(companyId: string): Promise<Customer[]> {
+    return this.customerModel.find(
+      dbUtil.query({companyId})
+    ).exec();
   }
 
   public async getCustomerById(id: string, companyId: string): Promise<Customer> {
-    return this.customerModel.findOne(dbUtil.query({
-      _id: id,
-      companyId,
-    }));
+    return this.customerModel.findOne(
+      dbUtil.query({
+        _id: Types.ObjectId.createFromHexString(id),
+        companyId
+      })
+    ).exec();
   }
 
   public async createCustomer(customer: CustomerInput): Promise<boolean> {
@@ -37,7 +41,7 @@ export class CustomerService {
   ): Promise<boolean> {
     customerUpdates.updatedAt = new Date();
     const result = await this.customerModel.updateOne(
-      dbUtil.query({ _id: id, companyId }),
+      dbUtil.query({ _id: new Types.ObjectId(id), companyId }),
       customerUpdates
     );
 
@@ -49,10 +53,10 @@ export class CustomerService {
 
   public async deleteCustomer(id: string): Promise<boolean> {
     const result = await this.customerModel.updateOne(
-      dbUtil.query({ _id: id }),
+      dbUtil.query({ _id: new Types.ObjectId(id) }),
       {
         updatedAt: new Date(),
-        deleted: true
+        active: false
       }
     );
 

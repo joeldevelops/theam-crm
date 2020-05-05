@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 import { User, UserInput, UserUpdates } from './user.types';
 import * as dbUtil from '../database/db.util';
@@ -15,10 +15,12 @@ export class UserService {
   }
 
   public async getUserById(id: string, companyId: string): Promise<User> {
-    return this.userModel.findOne(dbUtil.query({
-      _id: id,
-      companyId,
-    }));
+    return this.userModel.findOne(
+      dbUtil.query({
+        _id: new Types.ObjectId(id),
+        companyId,
+      })
+    ).exec();
   }
 
   public async createUser(user: UserInput): Promise<boolean> {
@@ -38,7 +40,7 @@ export class UserService {
   ): Promise<boolean> {
     userUpdates.updatedAt = new Date();
     const result = await this.userModel.updateOne(
-      dbUtil.query({ _id: id, companyId }),
+      dbUtil.query({ _id: new Types.ObjectId(id), companyId }),
       userUpdates
     );
 
@@ -50,10 +52,10 @@ export class UserService {
 
   public async deleteUser(id: string): Promise<boolean> {
     const result = await this.userModel.updateOne(
-      dbUtil.query({ _id: id }),
+      dbUtil.query({ _id: new Types.ObjectId(id) }),
       {
         updatedAt: new Date(),
-        deleted: true
+        active: false
       }
     );
 
