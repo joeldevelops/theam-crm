@@ -1,10 +1,9 @@
 import { Schema } from 'mongoose';
 
-export const customerSchema = new Schema({
+export const userSchema = new Schema({
     name: String,
     surname: String,
-    photo: String,
-    createdBy: String,
+    permissions: { type: String, default: 'USER' },
     companyId: String,
     createdAt: { type: Date, default: new Date() },
     updatedAt: { type: Date, default: new Date() },

@@ -35,6 +35,7 @@ export class CustomerService {
     companyId: string,
     customerUpdates: CustomerUpdates
   ): Promise<boolean> {
+    customerUpdates.updatedAt = new Date();
     const result = await this.customerModel.updateOne(
       dbUtil.query({ _id: id, companyId }),
       customerUpdates
@@ -49,7 +50,10 @@ export class CustomerService {
   public async deleteCustomer(id: string): Promise<boolean> {
     const result = await this.customerModel.updateOne(
       dbUtil.query({ _id: id }),
-      { deleted: true }
+      {
+        updatedAt: new Date(),
+        deleted: true
+      }
     );
 
     return dbUtil.checkResponse(

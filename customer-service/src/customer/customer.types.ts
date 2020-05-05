@@ -23,4 +23,5 @@ export class CustomerUpdates {
   photo: string; // Path to photo
   createdBy: string; // User ID
   companyId: string; // The company that this customer is in the CRM of
+  updatedAt: Date;
 }
