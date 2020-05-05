@@ -6,6 +6,7 @@ export class Customer extends Document {
   surname: string;
   photo: string; // Path to photo
   createdBy: string; // User ID
+  updatedBy: string;
   companyId: string; // The company that this customer is in the CRM of
   createdAt: Date;
   updatedAt: Date;
@@ -16,13 +17,14 @@ export class CustomerInput {
   name: string;
   surname: string;
   companyId: string;
+  createdBy?: string;
 }
 
 export class CustomerUpdates {
-  name: string;
-  surname: string;
-  photo: string; // Path to photo
-  createdBy: string; // User ID
-  companyId: string; // The company that this customer is in the CRM of
-  updatedAt: Date;
+  name?: string;
+  surname?: string;
+  photo?: string; // Path to photo
+  updatedBy?: string; // User ID
+  companyId?: string; // The company that this customer is in the CRM of
+  updatedAt?: Date;
 }

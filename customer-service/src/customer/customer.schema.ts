@@ -4,8 +4,9 @@ export const customerSchema = new Schema({
     name: String,
     surname: String,
     photo: String,
-    createdBy: String,
     companyId: String,
+    createdBy: String,
+    updatedBy: String,
     createdAt: { type: Date, default: new Date() },
     updatedAt: { type: Date, default: new Date() },
     active: { type: Boolean, default: true }

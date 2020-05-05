@@ -1,5 +1,6 @@
 export function checkResponse(result: any, message: string): boolean {
   if (!result) {
+    // TODO: replace with a logging service
     console.log(message);
     return false;
   }

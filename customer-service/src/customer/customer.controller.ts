@@ -10,7 +10,7 @@ export class CustomerController {
 
   @ApiTags('customer')
   @Get()
-  public async getAllCustomers(
+  public async getCustomers(
     @Query('companyId') companyId: string
   ): Promise<Customer[]> {
     return this.customerService.getCustomers(companyId);
@@ -18,7 +18,7 @@ export class CustomerController {
   
   @ApiTags('customer')
   @Get(':id')
-  public getCustomer(
+  public getCustomerById(
     @Param('id') id: string,
     @Query('companyId') companyId: string
   ): Promise<Customer> {

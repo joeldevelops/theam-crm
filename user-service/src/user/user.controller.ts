@@ -10,7 +10,7 @@ export class UserController {
 
   @ApiTags('user')
   @Get()
-  public async getAllUsers(
+  public async getUsers(
     @Query('companyId') companyId: string
   ): Promise<User[]> {
     return this.userService.getUsers(companyId);
@@ -18,7 +18,7 @@ export class UserController {
   
   @ApiTags('user')
   @Get(':id')
-  public getUser(
+  public getUserById(
     @Param('id') id: string,
     @Query('companyId') companyId: string
   ): Promise<User> {
