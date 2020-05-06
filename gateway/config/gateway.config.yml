@@ -1,0 +1,53 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  customer:
+    - host: '*'
+    - paths:
+      - '/api/v1/customer'
+      - '/api/v1/customer/*'
+      - '/customer-swagger'
+  user:
+    - host: '*'
+    - paths:
+      - '/api/v1/user'
+      - '/api/v1/user/*'
+      - '/user-swagger'
+serviceEndpoints:
+  customer:
+    url: 'http://localhost:1500'
+  user:
+    url: 'http://localhost:2020'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  default:
+    apiEndpoints:
+      - customer
+      - user
+    policies:
+      - proxy:
+          - 
+            condition:
+              name: pathMatch
+              pattern: ".*/user(-swagger)?(/.*)?"
+            action:
+              serviceEndpoint: user
+              changeOrigin: true
+          - 
+            condition:
+              name: pathMatch
+              pattern: ".*/customer(-swagger)?(/.*)?"
+            action:
+              serviceEndpoint: customer
+              changeOrigin: true
