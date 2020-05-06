@@ -1,5 +1,9 @@
 version: "2"
 services:
+  gateway:
+    build: ./gateway/.
+    ports:
+      - "8080:8080"
   customer:
     env_file:
       - ./customer-service/.env
@@ -16,6 +20,14 @@ services:
       - "2020:2020"
     depends_on:
       - mongo
+  photo:
+    env_file: 
+      - ./photo-service/.env
+    build: ./photo-service/.
+    ports:
+      - "3333:3333"
+    depends_on: 
+      - minio
   mongo:
     image: mongo
     ports:
@@ -23,3 +35,11 @@ services:
     volumes:
       - c:/data/db:/data/db
       - c:/data/configdb:/data/configdb
+  minio:
+    image: minio/minio
+    volumes:
+      - c:/data/data1:/data1
+      - c:/data/data2:/data2
+    ports:
+      - "9000:9000"
+    command: server minio/data1
