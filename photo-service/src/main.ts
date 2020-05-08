@@ -7,22 +7,24 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 
 import config from './config/config';
-import { NestMicroserviceOptions } from '@nestjs/common/interfaces/microservices/nest-microservice-options.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
 
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
-    options: {
-      urls: ['amqp://localhost:5672'],
-      queue: 'customer_queue',
-      queueOptions: {
-        durable: true
-      }
-    }
-  });
+  console.log(process.env.NODE_ENV);
+
+  // If there is time, implement RMQ flow
+  // app.connectMicroservice<MicroserviceOptions>({
+  //   transport: Transport.RMQ,
+  //   options: {
+  //     urls: [`amqp://${config.rmq.host}:${config.rmq.port}`],
+  //     queue: 'customer_queue',
+  //     queueOptions: {
+  //       durable: true
+  //     }
+  //   }
+  // });
 
   if (config.docsEnabled) {
     const options = new DocumentBuilder()
@@ -35,7 +37,7 @@ async function bootstrap() {
     SwaggerModule.setup(config.docsEndpoint, app, document);
   }
 
-  await app.startAllMicroservicesAsync();
+  // await app.startAllMicroservicesAsync();
   await app.listen(config.port);
 }
 bootstrap();

@@ -2,15 +2,17 @@ version: "2"
 
 services:
   gateway:
+    env_file:
+      ./.env
     build: ./gateway/.
     ports:
-      - "8080:8080"
+      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
   customer:
     env_file:
       - ./customer-service/.env
     build: ./customer-service/.
     ports:
-      - "1500:1500"
+      - "${CUSTOMER_PORT}:${CUSTOMER_PORT}"
     depends_on:
       - mongo
       - rabbitmq
@@ -19,7 +21,7 @@ services:
       - ./user-service/.env
     build: ./user-service/.
     ports:
-      - "2020:2020"
+      - "${USER_PORT}:${USER_PORT}"
     depends_on:
       - mongo
   photo:
@@ -27,7 +29,7 @@ services:
       - ./photo-service/.env
     build: ./photo-service/.
     ports:
-      - "3333:3333"
+      - "${PHOTO_PORT}:${PHOTO_PORT}"
     depends_on: 
       - minio
       - rabbitmq
@@ -42,7 +44,6 @@ services:
     image: minio/minio
     volumes:
       - c:/data/data1:/data1
-      - c:/data/data2:/data2
     ports:
       - "9000:9000"
     command: server minio/data1

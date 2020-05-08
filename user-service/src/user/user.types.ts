@@ -4,7 +4,7 @@ export class User extends Document {
   id: string;
   name: string;
   surname: string;
-  permissions: Permissions;
+  role: Role;
   companyId: string; // The company that this user belongs to
   createdAt: Date;
   updatedAt: Date;
@@ -14,7 +14,8 @@ export class User extends Document {
 export class UserInput {
   name: string;
   surname: string;
-  permissions: Permissions;
+  companyId: string;
+  role: Role;
 }
 
 export class UserUpdates {
@@ -24,12 +25,13 @@ export class UserUpdates {
   updatedAt: Date;
 }
 
-export class UserPermissionUpdates {
-  permissions: Permissions;
+export class UserRoleUpdates {
+  role: Role;
 }
 
-export enum Permissions {
+export enum Role {
   USER = 'USER',
   ADMIN = 'ADMIN',
-  SERVICE = 'SERVICE'
+  SERVICE = 'SERVICE',
+  ANY = 'ANY'
 }

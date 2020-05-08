@@ -5,11 +5,14 @@ WORKDIR /usr/bin/user
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 # Copy app source code
 COPY . .
 
+# Build step
+RUN npm run build
+
 #Expose port and start application
-EXPOSE 2020
-CMD [ "npm", "start" ]
+EXPOSE ${PORT}
+CMD [ "node", "dist/main.js" ]

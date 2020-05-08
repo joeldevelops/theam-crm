@@ -6,7 +6,11 @@ const config = {
     name: process.env.DB_NAME,
     connectionString: ''
   },
-  docsEnabled: process.env.DOCS_ENABLED || true,
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    ignoreExpiration: process.env.JWT_IG_EXP === "true" ? true : false
+  },
+  docsEnabled: process.env.DOCS_ENABLED === "true" ? true : false,
   docsEndpoint: process.env.DOCS_ENDPOINT
 };
 

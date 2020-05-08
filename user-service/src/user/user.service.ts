@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
-import { User, UserInput, UserUpdates, UserPermissionUpdates } from './user.types';
+import { User, UserInput, UserUpdates, UserRoleUpdates } from './user.types';
 import * as dbUtil from '../database/db.util';
 
 @Injectable()
@@ -10,8 +10,8 @@ export class UserService {
   
   constructor(@InjectModel('User') private userModel: Model<User>) {}
 
-  public async getUsers(userId: string): Promise<User[]> {
-    return this.userModel.find(dbUtil.query({userId})).exec();
+  public async getUsers(companyId: string): Promise<User[]> {
+    return this.userModel.find(dbUtil.query({companyId})).exec();
   }
 
   public async getUserById(id: string, companyId: string): Promise<User> {
@@ -24,8 +24,8 @@ export class UserService {
   }
 
   public async createUser(user: UserInput): Promise<boolean> {
-    const newUser = new this.userModel(user);
-    const result = await newUser.save();
+    const userDocument = new this.userModel(user);
+    const result = await userDocument.save();
 
     return dbUtil.checkResponse(
       result,
@@ -67,12 +67,12 @@ export class UserService {
 
   public async updateUserPermissions(
     id: string,
-    body: UserPermissionUpdates
+    body: UserRoleUpdates
   ): Promise<boolean> {
     const result = await this.userModel.updateOne(
       dbUtil.query({ _id: new Types.ObjectId(id) }),
       {
-        permissions: body.permissions
+        permissions: body.role
       }
     );
 

@@ -6,6 +6,10 @@ const config = {
     name: process.env.DB_NAME,
     connectionString: ''
   },
+  rmq: {
+    host: process.env.RMQ_HOST,
+    port: process.env.RMQ_PORT
+  },
   docsEnabled: process.env.DOCS_ENABLED || true,
   docsEndpoint: process.env.DOCS_ENDPOINT
 };
