@@ -32,6 +32,7 @@ async function bootstrap() {
     .setDescription('A service for managing photo uploads')
     .setVersion('1.0')
     .addTag('photo')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'JWT')
     .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup(config.docsEndpoint, app, document);

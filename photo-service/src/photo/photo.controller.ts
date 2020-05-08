@@ -3,17 +3,18 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 
 import { PhotoUrlResponse, PhotoInput, File } from './photo.types';
-import { ApiConsumes, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiBody, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { PhotoService } from './photo.service';
-import { ApiGuard } from '../guard/api.guard';
+import { JwtGuard } from '../guard/jwt.guard';
 
 @Controller('v1/photo')
-@UseGuards(ApiGuard)
+@ApiBearerAuth('JWT')
+@UseGuards(JwtGuard)
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
 
-  @ApiTags('photo')
   @Post('customer-upload/:customerId')
+  @ApiTags('photo')
   @UseInterceptors(FileInterceptor('file', {
     storage: memoryStorage(),
     limits: {
@@ -33,8 +34,8 @@ export class PhotoController {
     return this.photoService.storePhoto(customerId, file.buffer);
   }
 
-  @ApiTags('photo')
   @Get(':id')
+  @ApiTags('photo')
   public getUrl(@Param('id') id: string): Promise<PhotoUrlResponse> {
     return this.photoService.getPhotoUrl(id);
   }
