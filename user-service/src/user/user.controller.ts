@@ -15,7 +15,7 @@ export class UserController {
 
   @Get()
   @ApiTags('user')
-  @Roles(Role.ANY)
+  @Roles(Role.ADMIN, Role.SERVICE)
   public async getUsers(
     @Query('companyId') companyId: string
   ): Promise<User[]> {
@@ -24,7 +24,7 @@ export class UserController {
   
   @Get(':id')
   @ApiTags('user')
-  @Roles(Role.ANY)
+  @Roles(Role.ADMIN, Role.SERVICE)
   public getUserById(
     @Param('id') id: string,
     @Query('companyId') companyId: string
@@ -41,7 +41,7 @@ export class UserController {
 
   @Put(':id')
   @ApiTags('user')
-  @Roles(Role.ANY)
+  @Roles(Role.ADMIN, Role.SERVICE)
   public updateUser(
     @Param('id') id: string,
     @Body() body: UserUpdates
