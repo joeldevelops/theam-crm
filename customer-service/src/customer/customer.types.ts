@@ -17,14 +17,11 @@ export class CustomerInput {
   name: string;
   surname: string;
   companyId: string;
-  createdBy?: string;
 }
 
 export class CustomerUpdates {
   name?: string;
   surname?: string;
   photo?: string; // Path to photo
-  updatedBy?: string; // User ID
   companyId?: string; // The company that this customer is in the CRM of
-  updatedAt?: Date;
 }

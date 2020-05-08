@@ -30,6 +30,7 @@ async function bootstrap() {
     .setDescription('A service for managing customers')
     .setVersion('1.0')
     .addTag('customer')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'JWT')
     .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup(config.docsEndpoint, app, document);

@@ -39,7 +39,6 @@ export class CustomerService {
     companyId: string,
     customerUpdates: CustomerUpdates
   ): Promise<boolean> {
-    customerUpdates.updatedAt = new Date();
     const result = await this.customerModel.updateOne(
       dbUtil.query({ _id: new Types.ObjectId(id), companyId }),
       customerUpdates

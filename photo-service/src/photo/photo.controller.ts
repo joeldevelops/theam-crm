@@ -8,13 +8,13 @@ import { PhotoService } from './photo.service';
 import { JwtGuard } from '../guard/jwt.guard';
 
 @Controller('v1/photo')
+@ApiTags('photo')
 @ApiBearerAuth('JWT')
 @UseGuards(JwtGuard)
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
 
   @Post('customer-upload/:customerId')
-  @ApiTags('photo')
   @UseInterceptors(FileInterceptor('file', {
     storage: memoryStorage(),
     limits: {
@@ -35,7 +35,6 @@ export class PhotoController {
   }
 
   @Get(':id')
-  @ApiTags('photo')
   public getUrl(@Param('id') id: string): Promise<PhotoUrlResponse> {
     return this.photoService.getPhotoUrl(id);
   }

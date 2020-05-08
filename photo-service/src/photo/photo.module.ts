@@ -15,8 +15,7 @@ import config from '../config/config';
     StorageModule,
     PassportModule,
     JwtModule.register({
-      secret: config.jwt.secret,
-      
+      secret: config.jwt.secret
     })
   ],
   controllers: [PhotoController],

@@ -1,14 +1,17 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Query, Body, UseGuards, Req } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 import { CustomerService } from './customer.service';
 import { Customer, CustomerInput, CustomerUpdates } from './customer.types';
-import { ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from '../guard/jwt.guard';
 
 @Controller('v1/customer')
+@ApiTags('customer')
+@ApiBearerAuth('JWT')
+@UseGuards(JwtGuard)
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
-  @ApiTags('customer')
   @Get()
   public async getCustomers(
     @Query('companyId') companyId: string
@@ -16,7 +19,6 @@ export class CustomerController {
     return this.customerService.getCustomers(companyId);
   }
   
-  @ApiTags('customer')
   @Get(':id')
   public getCustomerById(
     @Param('id') id: string,
@@ -25,18 +27,26 @@ export class CustomerController {
     return this.customerService.getCustomerById(id, companyId);
   }
 
-  @ApiTags('customer')
   @Post()
-  public createCustomer(@Body() body: CustomerInput): Promise<boolean> {
+  public createCustomer(
+    @Req() request: any,
+    @Body() body: CustomerInput
+  ): Promise<boolean> {
+    // @ts-ignore ignoring this next line so ts and swagger don't complain
+    body.createdBy = request.user.userId;
     return this.customerService.createCustomer(body);
   }
 
-  @ApiTags('customer')
   @Put(':id')
   public updateCustomer(
     @Param('id') id: string,
+    @Req() request: any,
     @Body() body: CustomerUpdates
   ): Promise<boolean> {
+    // @ts-ignore ignoring this next line so ts and swagger don't complain
+    body.updatedBy = request.user.userId;
+    // @ts-ignore ignoring this next line so ts and swagger don't complain
+    body.updatedAt = new Date();
     return this.customerService.updateCustomer(
       id,
       body.companyId,
@@ -44,7 +54,6 @@ export class CustomerController {
     );
   }
 
-  @ApiTags('customer')
   @Delete(':id')
   public deleteCustomer(@Param('id') id: string): Promise<boolean> {
     return this.customerService.deleteCustomer(id);
