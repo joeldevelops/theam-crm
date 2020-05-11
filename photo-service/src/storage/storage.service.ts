@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Client } from 'minio';
 
 import { ObjectStore } from '../interface/object-store.interface';
+import * as storageUtil from './storage.util';
 
 import config from '../config/config';
 
@@ -10,13 +11,7 @@ export class StorageService implements ObjectStore {
   private s3connection: Client;
 
   constructor() {
-    this.s3connection = new Client({
-      endPoint: config.bucket.endPoint,
-      port: parseInt(config.bucket.port, 10),
-      useSSL: false,
-      accessKey: config.bucket.accessKey,
-      secretKey: config.bucket.secretKey
-    });
+    this.s3connection = storageUtil.getStorageConnection();
   }
 
   public async uploadPhoto(id: string, photo: Buffer): Promise<string> {

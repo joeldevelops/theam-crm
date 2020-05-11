@@ -14,6 +14,7 @@ import { JwtGuard } from '../guard/jwt.guard';
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
 
+  // Upload a file and return the ID
   @Post('customer-upload/:customerId')
   @UseInterceptors(FileInterceptor('file', {
     storage: memoryStorage(),
@@ -28,10 +29,10 @@ export class PhotoController {
     type: PhotoInput
   })
   public uploadCustomerPhoto(
-    @Param('customerId') customerId: string,
-    @UploadedFile() file: File
-  ): any {
-    return this.photoService.storePhoto(customerId, file.buffer);
+    @UploadedFile() file: File,
+    @Param('customerId') customerId?: string
+  ): Promise<string> {
+    return this.photoService.storePhoto(file.buffer, customerId);
   }
 
   @Get(':id')

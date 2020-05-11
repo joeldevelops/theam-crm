@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { User, UserInput, UserUpdates, UserRoleUpdates, Role } from './user.types';
 import { Roles } from '../decorator/roles.decorator';
 import { RoleGuard } from '../guard/role.guard';
-import { JwtGuard } from 'src/guard/jwt.guard';
+import { JwtGuard } from '../guard/jwt.guard';
 
 @Controller('v1/user')
 @ApiBearerAuth('JWT')

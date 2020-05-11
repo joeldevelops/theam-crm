@@ -14,6 +14,12 @@ const customer2: any = {};
 customer1.id = "id2";
 customer1.companyId = companyId;
 
+const request = {
+  user: {
+    userId: 'userId'
+  }
+}
+
 describe('Customer Controller', () => {
   let customerService: CustomerService;
   let customerController: CustomerController;
@@ -58,6 +64,55 @@ describe('Customer Controller', () => {
 
       expect(result.id).toEqual(customer1.id);
       expect(result.companyId).toEqual(companyId);
+    });
+  });
+
+  describe('createCustomer', () => {
+    const newCustomer = {
+      name: 'Paulo',
+      surname: 'Coelho',
+      companyId: 'ElAlquimista',
+      role: 'ADMIN'
+    }
+
+    it('should create a single customer and return a boolean', async () => {
+      jest
+        .spyOn(customerService, 'createCustomer')
+        .mockImplementationOnce(() => Promise.resolve(true));
+
+      const result = await customerController.createCustomer(request, newCustomer as any);
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  describe('updateCustomer', () => {
+    const updates = {
+      name: 'Paulo',
+      surname: 'Coelho',
+      companyId: 'ElAlquimista'
+    }
+
+    it('should update a single customer and return a boolean', async () => {
+      jest
+        .spyOn(customerService, 'updateCustomer')
+        .mockImplementationOnce(() => Promise.resolve(true));
+
+      const result = await customerController.updateCustomer(customer1.id, request, updates as any);
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  describe('deleteCustomer', () => {
+    it('should update a single customer and return a boolean', async () => {
+      jest
+        .spyOn(customerService, 'deleteCustomer')
+        .mockImplementationOnce(() => Promise.resolve(true));
+
+      const result = await customerController.deleteCustomer(customer1.id, request);
+
+      expect(result).toBeTruthy();
     });
   });
 });

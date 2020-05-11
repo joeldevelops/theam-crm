@@ -60,4 +60,69 @@ describe('User Controller', () => {
       expect(result.companyId).toEqual(companyId);
     });
   });
+
+  describe('createUser', () => {
+    const newUser = {
+      name: 'Paulo',
+      surname: 'Coelho',
+      companyId: 'ElAlquimista',
+      role: 'ADMIN'
+    }
+
+    it('should create a single user and return a boolean', async () => {
+      jest
+        .spyOn(userService, 'createUser')
+        .mockImplementationOnce(() => Promise.resolve(true));
+
+      const result = await userController.createUser(newUser as any);
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  describe('updateUser', () => {
+    const updates = {
+      name: 'Paulo',
+      surname: 'Coelho',
+      companyId: 'ElAlquimista'
+    }
+
+    it('should update a single user and return a boolean', async () => {
+      jest
+        .spyOn(userService, 'updateUser')
+        .mockImplementationOnce(() => Promise.resolve(true));
+
+      const result = await userController.updateUser(user1.id, updates as any);
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  describe('deleteUser', () => {
+    it('should update a single user and return a boolean', async () => {
+      jest
+        .spyOn(userService, 'deleteUser')
+        .mockImplementationOnce(() => Promise.resolve(true));
+
+      const result = await userController.deleteUser(user1.id);
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  describe('updateUserRole', () => {
+    const updates = {
+      role: 'ADMIN'
+    };
+
+    it('should update a single user and return a boolean', async () => {
+      jest
+        .spyOn(userService, 'updateUserPermissions')
+        .mockImplementationOnce(() => Promise.resolve(true));
+
+      const result = await userController.updateUserRole(user1.id, updates as any);
+
+      expect(result).toBeTruthy();
+    });
+  });
 });

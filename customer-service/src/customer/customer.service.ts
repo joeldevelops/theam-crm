@@ -50,10 +50,11 @@ export class CustomerService {
     );
   }
 
-  public async deleteCustomer(id: string): Promise<boolean> {
+  public async deleteCustomer(id: string, updatedBy: string): Promise<boolean> {
     const result = await this.customerModel.updateOne(
       dbUtil.query({ _id: new Types.ObjectId(id) }),
       {
+        updatedBy,
         updatedAt: new Date(),
         active: false
       }

@@ -55,7 +55,11 @@ export class CustomerController {
   }
 
   @Delete(':id')
-  public deleteCustomer(@Param('id') id: string): Promise<boolean> {
-    return this.customerService.deleteCustomer(id);
+  public deleteCustomer(
+    @Param('id') id: string,
+    @Req() request: any
+  ): Promise<boolean> {
+    const updatedBy = request.user.userId;
+    return this.customerService.deleteCustomer(id, updatedBy);
   }
 }
