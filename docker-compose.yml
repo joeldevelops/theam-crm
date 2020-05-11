@@ -15,7 +15,6 @@ services:
       - "${CUSTOMER_PORT}:${CUSTOMER_PORT}"
     depends_on:
       - mongo
-      - rabbitmq
   user:
     env_file:
       - ./user-service/.env
@@ -32,11 +31,10 @@ services:
       - "${PHOTO_PORT}:${PHOTO_PORT}"
     depends_on: 
       - minio
-      - rabbitmq
   mongo:
     image: mongo
     ports:
-      - "27017:27017"
+      - "${MONGO_PORT}:27017"
     volumes:
       - c:/data/db:/data/db
       - c:/data/configdb:/data/configdb
@@ -45,9 +43,5 @@ services:
     volumes:
       - c:/data/data1:/data1
     ports:
-      - "9000:9000"
+      - "${STORAGE_PORT}:9000"
     command: server minio/data1
-  rabbitmq:
-    image: rabbitmq
-    ports:
-      - "5672:5672"

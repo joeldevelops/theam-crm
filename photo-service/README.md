@@ -36,6 +36,27 @@ $ npm install
 
 ## Running the app
 
+Before running the app for the first time, you will need to create a `.env` file with the following properties:
+```
+PORT=3333
+
+BUCKET_KEY="minioadmin"
+BUCKET_SECRET="minioadmin"
+BUCKET_NAME="photos"
+BUCKET_ENDPOINT=localhost
+BUCKET_PORT="9000"
+
+GATEWAY_HOST=localhost
+GATEWAY_PORT=80
+GATEWAY_SECURITY=http
+
+JWT_SECRET=GranCanaria
+JWT_IG_EXP=false
+
+DOCS_ENABLED=true
+DOCS_ENDPOINT="photo-swagger"
+```
+
 ```bash
 # development
 $ npm run start

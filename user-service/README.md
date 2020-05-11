@@ -39,12 +39,15 @@ $ npm install
 Before running the app for the first time, you will need to create a `.env` file with the following properties:
 ```
 PORT=2020
-DB_HOST="mongodb://localhost"
-DB_PORT="27017"
-DB_NAME="user"
+DB_HOST=mongodb://localhost
+DB_PORT=27017
+DB_NAME=user
+
+JWT_SECRET=GranCanaria
+JWT_IG_EXP=false
 
 DOCS_ENABLED=true
-DOCS_ENDPOINT="swagger"
+DOCS_ENDPOINT="user-swagger"
 ```
 
 ```bash
