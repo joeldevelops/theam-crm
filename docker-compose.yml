@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
   gateway:
@@ -8,24 +8,18 @@ services:
     ports:
       - "${GATEWAY_PORT}:${GATEWAY_PORT}"
   customer:
-    env_file:
-      - ./customer-service/.env
     build: ./customer-service/.
     ports:
       - "${CUSTOMER_PORT}:${CUSTOMER_PORT}"
     depends_on:
       - mongo
   user:
-    env_file:
-      - ./user-service/.env
     build: ./user-service/.
     ports:
       - "${USER_PORT}:${USER_PORT}"
     depends_on:
       - mongo
   photo:
-    env_file: 
-      - ./photo-service/.env
     build: ./photo-service/.
     ports:
       - "${PHOTO_PORT}:${PHOTO_PORT}"

@@ -27,13 +27,13 @@ apiEndpoints:
     - paths: '/photos/*'
 serviceEndpoints:
   customer:
-    url: 'http://localhost:1500'
+    url: 'http://customer:1500'
   user:
-    url: 'http://localhost:2020'
+    url: 'http://user:2020'
   photo:
-    url: 'http://localhost:3333'
+    url: 'http://photo:3333'
   storage:
-    url: 'http://localhost:9000'
+    url: 'http://minio:9000'
 policies:
   - basic-auth
   - cors

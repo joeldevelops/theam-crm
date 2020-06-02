@@ -29,11 +29,15 @@ MONGO_PORT=27017
 
 Before running the apps via docker you will need to change lines 39, 40, and 44 from:
 ```bash
-c:/data/...:data/...
+c:/data/db:data/db
+c:/data/configdb:data/configdb
+c:/data/data1:/data1
 ```
 to:
 ```bash
-/path/to/data/...:data/...
+/tmp/data/db:/data/db
+/tmp/data/configdb:/data/configdb
+/tmp/data1:/data1
 ```
 
 ### Running
